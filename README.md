@@ -26,6 +26,17 @@ This fork implements proper origin validation for WebSocket connections:
 - Logs rejected connection attempts for security monitoring
 - Fixed in: `src/classes/terminal.class.js`
 
+## Recent Updates (October 2025)
+
+This fork has been updated with modern versions of all dependencies:
+
+- **Electron**: Upgraded from v12.1.0 to v37.6.0 (latest stable)
+- **Node.js**: Now requires v20.x LTS (previously v16)
+- **Dependencies**: All dependencies updated to latest stable versions
+- **Security**: All known vulnerabilities patched (0 vulnerabilities)
+- **xterm**: Migrated to modern @xterm/* packages (v5.5.0)
+- **Build system**: Modernized to work with current Node.js and Python versions
+
 ---
 
 # ⚠️ Important Notes
@@ -107,6 +118,8 @@ Now, with the correct environment set up, you can clone and build the project.
     
     ```
     
+    This will install all dependencies and rebuild native modules (like node-pty) for the current Electron version.
+    
 -   **Build the binary:**
         
     ```
@@ -117,6 +130,12 @@ Now, with the correct environment set up, you can clone and build the project.
 
 After the build completes, you will find the installable `.AppImage` and `.deb` files in the `dist/` directory.
 
+### Troubleshooting
+
+If you encounter issues with native modules not building:
+- Ensure you have build-essential installed: `sudo apt install build-essential`
+- Make sure Python 3 is available: `which python3`
+- Try rebuilding manually: `cd src && npx @electron/rebuild`
 
 # Contributing
 
