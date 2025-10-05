@@ -43,11 +43,11 @@ Head over to releases and download the correct prebuild
 
 ## Building from Source (Recommended for Security)
 
-Due to the project's age, the build process has specific version requirements. Following these steps carefully is recommended to ensure you have a working, patched version.
+This fork has been updated with modern versions of all dependencies. Following these steps will ensure you have a working, patched version with up-to-date components.
 
 ### 1. Environment Setup (Linux/Ubuntu)
 
-The build process is sensitive to Node.js and Python versions.
+The build process requires modern versions of Node.js and Python.
 
 -   **Install `nvm` (Node Version Manager):** This is the best way to manage Node.js versions.
     
@@ -58,23 +58,22 @@ The build process is sensitive to Node.js and Python versions.
     
     ```
     
--   **Install and Use Node.js v16:** This project requires Node.js v16 to compile its native dependencies.
+-   **Install and Use Node.js v20 LTS:** This project now requires Node.js v20 LTS for the latest Electron version.
     
     
     
     ```
-    nvm install 16
-    nvm use 16
+    nvm install 20
+    nvm use 20
     
     ```
     
--   **Install Python 3.10:** The build scripts require a specific Python version.
+-   **Install Python 3:** The build scripts require Python 3 (3.8 or later recommended).
     
     
     ```
-    sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt update
-    sudo apt install -y python3.10
+    sudo apt install -y python3 python3-pip
     
     ```
     
@@ -101,10 +100,10 @@ Now, with the correct environment set up, you can clone and build the project.
     
     ```
     
--   **Install dependencies:** This command uses the specific versions of Node and Python you just installed.
+-   **Install dependencies:**
         
     ```
-    npm_config_python=/usr/bin/python3.10 npm run install-linux
+    npm run install-linux
     
     ```
     
