@@ -110,5 +110,8 @@
   },
   "optionalDependencies": {
     "cson-parser": "4.0.9"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.7.2"
   }
 }
