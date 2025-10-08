@@ -11,6 +11,9 @@ eDEX-UI is a fullscreen, cross-platform terminal emulator and system monitor tha
 
 This is a community-driven fork of the original eDEX-UI, which was archived in October 2021. This fork aims to revive the project, apply security patches, and continue its development.
 
+> [!NOTE]
+> Check out my android port of edex [here](https://github.com/theelderemo/Edex-UI-android)
+
 # 🛡️ Security Fix Information
 - CVE: Not assigned (discovered post-archive)
 - Severity: Critical
