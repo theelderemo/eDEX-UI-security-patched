@@ -1,5 +1,9 @@
 class DocReader {
     constructor(opts) {
+        if (typeof pdfjsLib === 'undefined') {
+            console.warn("DocReader: pdfjsLib is not available. PDF rendering is disabled.");
+            return;
+        }
         pdfjsLib.GlobalWorkerOptions.workerSrc = './node_modules/pdfjs-dist/build/pdf.worker.js';
         const modalElementId = "modal_" + opts.modalId;
         const path = opts.path;

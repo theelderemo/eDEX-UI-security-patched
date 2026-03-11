@@ -42,6 +42,35 @@ ipc.on("log", (e, type, content) => {
     signale[type](content);
 });
 
+// Handler for app.getPath when @electron/remote fails
+ipc.on("get-app-path", (e, name) => {
+    e.returnValue = electron.app.getPath(name);
+});
+ipc.on("get-app-version", (e) => {
+    e.returnValue = app.getVersion();
+});
+ipc.on("app-relaunch", () => {
+    app.relaunch();
+});
+ipc.on("app-quit", () => {
+    app.quit();
+});
+ipc.on("app-focus", () => {
+    if (win) win.focus();
+});
+ipc.on("toggle-devtools", () => {
+    if (win) win.webContents.toggleDevTools();
+});
+ipc.on("set-window-size", (e, {width, height}) => {
+    if (win) win.setSize(width, height);
+});
+ipc.on("window-focus", () => {
+    if (win) win.focus();
+});
+ipc.on("window-minimize", () => {
+    if (win) win.minimize();
+});
+
 var win, tty, extraTtys;
 const settingsFile = path.join(electron.app.getPath("userData"), "settings.json");
 const shortcutsFile = path.join(electron.app.getPath("userData"), "shortcuts.json");
@@ -202,17 +231,23 @@ function createWindow(settings) {
         }
     });
 
+    // Enable @electron/remote for this window BEFORE loading URL
+    require('@electron/remote/main').enable(win.webContents);
+
     win.loadURL(url.format({
         pathname: path.join(__dirname, 'ui.html'),
         protocol: 'file:',
         slashes: true
     }));
 
-    // Enable @electron/remote for this window
-    require('@electron/remote/main').enable(win.webContents);
-
     signale.complete("Frontend window created!");
     win.show();
+    // win.webContents.openDevTools(); // Disabled
+    
+    // Log renderer crashes
+    win.webContents.on('crashed', (event, killed) => {
+        signale.error('Renderer process crashed!', { killed });
+    });
     if (!settings.allowWindowed) {
         win.setResizable(false);
     } else if (!require(lastWindowStateFile)["useFullscreen"]) {

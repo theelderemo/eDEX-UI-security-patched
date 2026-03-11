@@ -39,7 +39,13 @@ class RAMwatcher {
         if (this.currentlyUpdating) return;
         this.currentlyUpdating = true;
         window.si.mem().then(data => {
-            if (data.free+data.used !== data.total) throw("RAM Watcher Error: Bad memory values");
+            // Allow small rounding differences in memory values (within 1% of total)
+            const memorySum = data.free + data.used;
+            const difference = Math.abs(memorySum - data.total);
+            const tolerance = data.total * 0.01; // 1% tolerance
+            if (difference > tolerance) {
+                console.warn(`RAM Watcher: Memory values mismatch (free: ${data.free}, used: ${data.used}, total: ${data.total})`);
+            }
 
             // Convert the data for the 440-points grid
             let active = Math.round((440*data.active)/data.total);

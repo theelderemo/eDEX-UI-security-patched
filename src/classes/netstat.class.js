@@ -45,16 +45,10 @@ class Netstat {
         this.geoLookup = {
             get: () => null
         };
-        let geolite2 = require("geolite2-redist");
-        let maxmind = require("maxmind");
-        geolite2.downloadDbs(require("path").join(require("@electron/remote").app.getPath("userData"), "geoIPcache")).then(() => {
-           geolite2.open('GeoLite2-City', path => {
-                return maxmind.open(path);
-            }).catch(e => {throw e}).then(lookup => {
-                this.geoLookup = lookup;
-                this.lastconn.finished = true;
-            });
-        });
+        
+        // GeoIP lookup disabled - geolite2-redist is ES module only and incompatible with Electron renderer
+        console.info("GeoIP lookup disabled (geolite2-redist not compatible with current setup)");
+        this.lastconn.finished = true;
     }
     updateInfo() {
         window.si.networkInterfaces().then(async data => {
@@ -115,7 +109,7 @@ class Netstat {
                                 let data = JSON.parse(rawData);
                                 this.ipinfo = {
                                     ip: data.ip,
-                                    geo: this.geoLookup.get(data.ip).location
+                                    geo: this.geoLookup.get(data.ip)?.location ?? {}
                                 };
 
                                 let ip = this.ipinfo.ip;

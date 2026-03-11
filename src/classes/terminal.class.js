@@ -103,6 +103,7 @@ class Terminal {
                 cursorBlink: window.theme.terminal.cursorBlink || true,
                 cursorStyle: window.theme.terminal.cursorStyle || "block",
                 allowTransparency: window.theme.terminal.allowTransparency || false,
+                allowProposedApi: true,
                 fontFamily: window.theme.terminal.fontFamily || "Fira Mono",
                 fontSize: window.theme.terminal.fontSize || window.settings.termFontSize || 15,
                 fontWeight: window.theme.terminal.fontWeight || "normal",
