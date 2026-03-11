@@ -67,6 +67,9 @@ ipc.on("set-window-size", (e, {width, height}) => {
 ipc.on("window-focus", () => {
     if (win) win.focus();
 });
+ipc.on("window-minimize", () => {
+    if (win) win.minimize();
+});
 
 var win, tty, extraTtys;
 const settingsFile = path.join(electron.app.getPath("userData"), "settings.json");

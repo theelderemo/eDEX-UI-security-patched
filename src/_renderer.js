@@ -79,9 +79,11 @@ if (!remote) {
         isFullScreen: () => false,
         isMaximized: () => false,
         unmaximize: () => {},
+        minimize: () => { ipc.send('window-minimize'); },
+        getSize: () => [window.innerWidth, window.innerHeight],
         on: () => {}
     };
-    
+
     remote = {
         app: {
             getPath: (name) => {
@@ -101,7 +103,10 @@ if (!remote) {
             }
         },
         process: process,
-        screen: electron.screen,
+        screen: {
+            getAllDisplays: () => [{ id: 0 }],
+            getPrimaryDisplay: () => ({ bounds: { x: 0, y: 0, width: window.screen.width, height: window.screen.height } })
+        },
         getCurrentWindow: () => {
             return mockWindow;
         },
