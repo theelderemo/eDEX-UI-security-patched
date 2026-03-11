@@ -874,10 +874,10 @@ window.openSettings = async () => {
                 <h6 id="settingsEditorStatus">Loaded values from memory</h6>
                 <br>`,
         buttons: [
-            {label: "Open in External Editor", action:`electron.shell.openPath('${settingsFile}');electronWin.minimize();`},
+            {label: "Open in External Editor", action:`window.openInExternalEditor('${settingsFile}')`},
             {label: "Save to Disk", action: "window.writeSettingsFile()"},
             {label: "Reload UI", action: "window.location.reload(true);"},
-            {label: "Restart eDEX", action: "remote.app.relaunch();remote.app.quit();"}
+            {label: "Restart eDEX", action: "window.restarteDEX()"}
         ]
     }, () => {
         // Link the keyboard back to the terminal
@@ -1018,7 +1018,7 @@ window.openShortcutsHelp = () => {
                 </details>
                 <br>`,
         buttons: [
-            {label: "Open Shortcuts File", action:`electron.shell.openPath('${shortcutsFile}');electronWin.minimize();`},
+            {label: "Open Shortcuts File", action:`window.openInExternalEditor('${shortcutsFile}')`},
             {label: "Reload UI", action: "window.location.reload(true);"},
         ]
     }, () => {
@@ -1200,6 +1200,10 @@ window.onresize = () => {
 // See #413
 window.resizeTimeout = null;
 let electronWin = remote.getCurrentWindow();
+
+window.restarteDEX = () => { remote.app.relaunch(); remote.app.quit(); };
+window.openInExternalEditor = (path) => { electron.shell.openPath(path); electronWin.minimize(); };
+
 electronWin.on("resize", () => {
     if (settings.keepGeometry === false) return;
     clearTimeout(window.resizeTimeout);
