@@ -16,6 +16,9 @@ window._escapeHtml = text => {
 window._encodePathURI = uri => {
     return encodeURI(uri).replace(/#/g, "%23");
 };
+window.openExternalURL = url => {
+    require('electron').shell.openExternal(url);
+};
 window._purifyCSS = str => {
     if (typeof str === "undefined") return "";
     if (typeof str !== "string") {
@@ -72,7 +75,11 @@ if (!remote) {
         },
         focus: () => {
             ipc.send('window-focus');
-        }
+        },
+        isFullScreen: () => false,
+        isMaximized: () => false,
+        unmaximize: () => {},
+        on: () => {}
     };
     
     remote = {

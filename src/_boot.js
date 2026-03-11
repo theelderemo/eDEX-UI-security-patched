@@ -224,8 +224,7 @@ function createWindow(settings) {
             nodeIntegration: true,
             nodeIntegrationInSubFrames: false,
             allowRunningInsecureContent: false,
-            experimentalFeatures: settings.experimentalFeatures || false,
-            enableRemoteModule: true
+            experimentalFeatures: settings.experimentalFeatures || false
         }
     });
 

@@ -109,7 +109,7 @@ class Netstat {
                                 let data = JSON.parse(rawData);
                                 this.ipinfo = {
                                     ip: data.ip,
-                                    geo: this.geoLookup.get(data.ip).location
+                                    geo: this.geoLookup.get(data.ip)?.location ?? {}
                                 };
 
                                 let ip = this.ipinfo.ip;
